@@ -12,6 +12,7 @@
             box-sizing: border-box;
         }
         #fallbackLink a {
+        
             text-decoration: none;
             font-weight: bold;
         }
@@ -22,6 +23,11 @@
             display: block;
             width: 100%;
             margin-bottom: 10px;
+            font-weight: 600;
+        }
+        .rectangle-img {
+            width: 100%;
+            height: auto;
         }
         #qrCode {
             margin-top: 20px;
@@ -32,10 +38,12 @@
             background-color: white;
             border-radius: 10px;
         }
-        .rectangle-img {
-            width: 100%;
-            height: auto;
+        .btn-primary:hover{
+            color: #106cfc;
+            border: 1px solid #106cfc;
+            background-color: white;
         }
+
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 </head>
@@ -44,7 +52,7 @@
         <img src="https://via.placeholder.com/400x100" class="rectangle-img" alt="">
         <div class="row mt-5">
             <div class="col-md-4 text-center">
-                <h5><b>आजीवन तिथि नकरा</b></h5>
+                <h5 class="text-center border p-2"><b> आजीवन तिथि नकरा</b></h5>
                 <button class="btn btn-primary btn-custom" onclick="initiatePayment(5000)">5000/- भोजनशाला</button>
                 <button class="btn btn-primary btn-custom" onclick="initiatePayment(5000)">5000/- गौशाला</button>
                 <button class="btn btn-primary btn-custom" onclick="initiatePayment(3600)">3600/- स्नात्र पूजा</button>
@@ -68,8 +76,7 @@
                 </div>
             </div>
             <div class="col-md-4 text-center">
-                <h5><b>वार्षिक एक दिन</b></h5>
-
+                <h5 class="text-center border p-2"><b> आजीवन तिथि नकरा</b></h5>
                 <button class="btn btn-primary btn-custom" onclick="initiatePayment(550)">550/- वैयावच्च</button>
                 <button class="btn btn-primary btn-custom" onclick="initiatePayment(550)">550/- भोजनशाला</button>
                 <button class="btn btn-primary btn-custom" onclick="initiatePayment(500)">500/- गौशाला</button>
@@ -81,8 +88,8 @@
                 <button class="btn btn-primary btn-custom" onclick="initiatePayment(150)">150/- स्नात्र पूजा</button>
                 <button class="btn btn-primary btn-custom" onclick="initiatePayment(100)">100/- सुख</button>
             </div>
-            <img src="https://via.placeholder.com/400x100" class="rectangle-img mt-5" alt="">
         </div>
+        <img src="https://via.placeholder.com/400x100" class="rectangle-img mt-3" alt="">
     </div>
 
     <script>
@@ -116,10 +123,6 @@
         function generateFallbackLink(upiLink) {
             const fallbackLinkContainer = document.getElementById('fallbackLink');
             fallbackLinkContainer.innerHTML = `<a href="${upiLink}" target="_blank">Pay with UPI App</a>`;
-        }
-
-        window.onload = function() {
-            initiatePayment(5000);
         }
     </script>
 
