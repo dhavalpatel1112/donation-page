@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> आजीवन तिथि नकरा</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        #fallbackLink a {
+            text-decoration: none;
+            font-weight: bold;
+        }
+        #fallbackLink a:hover {
+            text-decoration: underline;
+        }
+        .btn-custom {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        #qrCode {
+            margin-top: 20px;
+            width: 200px;
+            height: 200px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            background-color: white;
+            border-radius: 10px;
+        }
+        .rectangle-img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+</head>
+<body>
+    <div class="container p-5">
+        <img src="https://via.placeholder.com/400x100" class="rectangle-img" alt="">
+        <div class="row mt-5">
+            <div class="col-md-4 text-center">
+                <h5><b>आजीवन तिथि नकरा</b></h5>
+                <button class="btn btn-primary btn-custom" onclick="initiatePayment(5000)">5000/- भोजनशाला</button>
+                <button class="btn btn-primary btn-custom" onclick="initiatePayment(5000)">5000/- गौशाला</button>
+                <button class="btn btn-primary btn-custom" onclick="initiatePayment(3600)">3600/- स्नात्र पूजा</button>
+                <button class="btn btn-primary btn-custom" onclick="initiatePayment(3600)">3600/- अंग रचना</button>
+                <button class="btn btn-primary btn-custom" onclick="initiatePayment(1536)">1536/- वैयावच्च</button>
+                <button class="btn btn-primary btn-custom" onclick="initiatePayment(1000)">1000/- आयंबिलशाला</button>
+                <button class="btn btn-primary btn-custom" onclick="initiatePayment(1000)">1000/- क्लीनिक</button>
+                <button class="btn btn-primary btn-custom" onclick="initiatePayment(1000)">1000/- अनाथ शिशु मंदिर</button>
+                <button class="btn btn-primary btn-custom" onclick="initiatePayment(1000)">1000/- विद्यापीठ</button>
+                <button class="btn btn-primary btn-custom" onclick="initiatePayment(531)">531/- सामायिक बैंक</button>
+                <button class="btn btn-primary btn-custom" onclick="initiatePayment(500)">500/- उकाळेलुं पाणी</button>
+                <button class="btn btn-primary btn-custom" onclick="initiatePayment(500)">500/- सुखडी</button>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="container">
+                    <p class="text-center">If payment fails via link, scan the QR code below:</p>
+                </div>
+                <canvas id="qrCode"></canvas>
+                <div class="container">
+                    <div id="fallbackLink"></div>
+                </div>
+            </div>
+            <div class="col-md-4 text-center">
+                <h5><b>वार्षिक एक दिन</b></h5>
+
+                <button class="btn btn-primary btn-custom" onclick="initiatePayment(550)">550/- वैयावच्च</button>
+                <button class="btn btn-primary btn-custom" onclick="initiatePayment(550)">550/- भोजनशाला</button>
+                <button class="btn btn-primary btn-custom" onclick="initiatePayment(500)">500/- गौशाला</button>
+                <button class="btn btn-primary btn-custom" onclick="initiatePayment(350)">350/- अनाथ शिशु मंदिर</button>
+                <button class="btn btn-primary btn-custom" onclick="initiatePayment(350)">350/- अंगरचना</button>
+                <button class="btn btn-primary btn-custom" onclick="initiatePayment(300)">300/- आयंबिलशाला</button>
+                <button class="btn btn-primary btn-custom" onclick="initiatePayment(250)">250/- विद्यापीठ</button>
+                <button class="btn btn-primary btn-custom" onclick="initiatePayment(250)">250/- उकाळेलुं पाणी</button>
+                <button class="btn btn-primary btn-custom" onclick="initiatePayment(150)">150/- स्नात्र पूजा</button>
+                <button class="btn btn-primary btn-custom" onclick="initiatePayment(100)">100/- सुख</button>
+            </div>
+            <img src="https://via.placeholder.com/400x100" class="rectangle-img mt-5" alt="">
+        </div>
+    </div>
+
+    <script>
+        function initiatePayment(amount) {
+            const upiID = '9428913847@upi';
+            const payeeName = 'Arham Site';
+            const upiLink = `upi://pay?pa=${upiID}&pn=${encodeURIComponent(payeeName)}&am=${amount}&cu=INR`;
+
+            generateQRCode(upiLink);
+            generateFallbackLink(upiLink);
+
+            if (isMobile()) {
+                const fallbackLinkContainer = document.getElementById('fallbackLink');
+                fallbackLinkContainer.innerHTML += `<p><a href="${upiLink}" target="_blank"></a></p>`;
+                window.location.href = upiLink;
+            }
+        }
+
+        function isMobile() {
+            return /Mobi|Android|iPhone/i.test(navigator.userAgent);
+        }
+
+        function generateQRCode(upiLink) {
+            const qr = new QRious({
+                element: document.getElementById('qrCode'),
+                value: upiLink,
+                size: 200,
+            });
+        }
+
+        function generateFallbackLink(upiLink) {
+            const fallbackLinkContainer = document.getElementById('fallbackLink');
+            fallbackLinkContainer.innerHTML = `<a href="${upiLink}" target="_blank">Pay with UPI App</a>`;
+        }
+
+        window.onload = function() {
+            initiatePayment(5000);
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
